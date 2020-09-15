@@ -12,8 +12,8 @@ namespace TP1_Heritage.Entities
         private double aire = 0;
         private double perimetre = 0;
 
-        public override double Aire { get => (rayon * rayon) / Math.PI; set => aire = value; }
-        public override double Perimetre { get => 2 * rayon * Math.PI; set => perimetre = value; }
+        public override double Aire { get => (rayon * rayon) * Math.PI;}
+        public override double Perimetre { get => 2 * rayon * Math.PI;}
         public double Rayon { get => rayon; set => rayon = value; }
 
 

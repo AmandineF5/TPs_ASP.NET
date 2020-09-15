@@ -11,8 +11,8 @@ namespace TP1_Heritage.Entities
         private double aire;
         private double perimetre;
 
-        public abstract double Aire { get ; set; }
-        public abstract double Perimetre { get; set; }
+        public abstract double Aire { get; }
+        public abstract double Perimetre { get; }
 
         public override string ToString()
         {

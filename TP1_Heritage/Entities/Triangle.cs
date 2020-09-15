@@ -17,8 +17,8 @@ namespace TP1_Heritage.Entities
         public double A { get => a; set => a = value; }
         public double B { get => b; set => b = value; }
         public double C { get => c; set => c = value; }
-        public override double Aire { get => (a * b) / 2; set => aire = value; }
-        public override double Perimetre { get => a + b + c; set => perimetre = value; }
+        public override double Aire { get => (a * b) / 2; }
+        public override double Perimetre { get => a + b + c; }
 
         public override string ToString()
         {

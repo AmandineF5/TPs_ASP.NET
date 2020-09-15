@@ -13,8 +13,8 @@ namespace TP1_Heritage.Entities
         private double perimetre = 0;
 
         public double Longueur { get => longueur; set => longueur = value; }
-        public override double Aire { get => longueur * longueur; set => aire = value; }
-        public override double Perimetre { get => longueur * 4; set => perimetre = value; }
+        public override double Aire { get => longueur * longueur; }
+        public override double Perimetre { get => longueur * 4; }
 
         public override string ToString()
         {
