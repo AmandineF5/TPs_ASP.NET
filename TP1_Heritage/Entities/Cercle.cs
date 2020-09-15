@@ -9,8 +9,6 @@ namespace TP1_Heritage.Entities
     class Cercle : Forme
     {
         private double rayon = 0;
-        private double aire = 0;
-        private double perimetre = 0;
 
         public override double Aire { get => (rayon * rayon) * Math.PI;}
         public override double Perimetre { get => 2 * rayon * Math.PI;}

@@ -8,8 +8,6 @@ namespace TP1_Heritage.Entities
 {
     public abstract class Forme
     {
-        private double aire;
-        private double perimetre;
 
         public abstract double Aire { get; }
         public abstract double Perimetre { get; }

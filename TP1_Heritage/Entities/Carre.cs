@@ -9,8 +9,6 @@ namespace TP1_Heritage.Entities
     public class Carre : Forme
     {
         private double longueur = 0;
-        private double aire = 0;
-        private double perimetre = 0;
 
         public double Longueur { get => longueur; set => longueur = value; }
         public override double Aire { get => longueur * longueur; }

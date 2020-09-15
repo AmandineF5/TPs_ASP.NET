@@ -11,8 +11,6 @@ namespace TP1_Heritage.Entities
         private double a = 0;
         private double b = 0;
         private double c = 0;
-        private double aire = 0;
-        private double perimetre = 0;
 
         public double A { get => a; set => a = value; }
         public double B { get => b; set => b = value; }

@@ -10,8 +10,6 @@ namespace TP1_Heritage.Entities
     {
         private double longueur = 0;
         private double largeur = 0;
-        private double aire = 0;
-        private double perimetre = 0;
 
         public double Longueur { get => longueur; set => longueur = value; }
         public double Largeur { get => largeur; set => largeur = value; }
