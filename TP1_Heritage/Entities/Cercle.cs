@@ -10,9 +10,9 @@ namespace TP1_Heritage.Entities
     {
         private double rayon = 0;
 
-        public override double Aire { get => (rayon * rayon) * Math.PI;}
-        public override double Perimetre { get => 2 * rayon * Math.PI;}
-        public double Rayon { get => rayon; set => rayon = value; }
+        public override double Aire { get => (Rayon * Rayon) * Math.PI;}
+        public override double Perimetre { get => 2 * Rayon * Math.PI;}
+        public double Rayon { get => Rayon; set => Rayon = value; }
 
 
         public override string ToString()
