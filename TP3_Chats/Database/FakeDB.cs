@@ -24,7 +24,7 @@ namespace TP3_Chats.Database
 
         public List<Chat> Chats { get; private set; }
 
-        public List<Chat> GetMeuteDeChats()
+        private List<Chat> GetMeuteDeChats()
         {
             var i = 1;
             return new List<Chat>
