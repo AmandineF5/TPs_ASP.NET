@@ -61,7 +61,7 @@ namespace TP3_Chats.Controllers
             }
             catch
             {
-                return View();
+                return View(id);
             }
             return RedirectToAction("Index");
         }
