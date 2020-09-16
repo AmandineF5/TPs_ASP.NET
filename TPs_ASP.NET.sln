@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP1_Heritage", "TP1_Heritag
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP2_Linq", "TP2_Linq\TP2_Linq.csproj", "{9B263227-5874-4944-B3BB-9DB68C4E0BE4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TP3_Chats", "TP3_Chats\TP3_Chats.csproj", "{30FA3AF7-5522-4E29-8EDB-AA5CE44C631C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{9B263227-5874-4944-B3BB-9DB68C4E0BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9B263227-5874-4944-B3BB-9DB68C4E0BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9B263227-5874-4944-B3BB-9DB68C4E0BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30FA3AF7-5522-4E29-8EDB-AA5CE44C631C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30FA3AF7-5522-4E29-8EDB-AA5CE44C631C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30FA3AF7-5522-4E29-8EDB-AA5CE44C631C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30FA3AF7-5522-4E29-8EDB-AA5CE44C631C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
