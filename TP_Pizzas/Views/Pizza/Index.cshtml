@@ -7,7 +7,7 @@
 <h2>Index</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Create New", "CreatePizza")
 </p>
 <table class="table">
     <tr>
@@ -28,14 +28,22 @@
         @Html.DisplayFor(modelItem => item.Nom)
     </td>
     <td>
-        @foreach (var ingredient in item.Ingredients)
+        @if (item.Ingredients != null)
         {
-            <p>@Html.DisplayFor(modelitem => ingredient.Nom)</p>
+            foreach (var ingredient in item.Ingredients)
+            {
+                <p>@Html.DisplayFor(modelitem => ingredient.Nom)</p>
+            }
         }
+
 
     </td>
     <td>
-        @Html.DisplayFor(modelItem => item.Pate.Nom)
+        @if (item.Pate != null)
+        {
+            @Html.DisplayFor(modelItem => item.Pate.Nom)
+        }
+
     </td>
     <td>
         @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |

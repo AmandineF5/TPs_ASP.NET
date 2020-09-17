@@ -1455,7 +1455,7 @@ $.extend( $.validator, {
 				re = new RegExp( "\\b" + type + "\\b" ),
 				notSupported = type && !re.test( supportedTypes.join() ),
 				decimalPlaces = function( num ) {
-					var match = ( "" + num ).match( /(?:\.(\d+))?$/ );
+					var match = ( "" + num ).match( /(?:\,(\d+))?$/ );
 					if ( !match ) {
 						return 0;
 					}

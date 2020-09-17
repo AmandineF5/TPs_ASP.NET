@@ -30,21 +30,27 @@ namespace TP_Pizzas.Utils
         private List<Pizza> GetPizzas()
         {
             List<Pizza> pizzas = new List<Pizza>();
+            int randP = 1;
+            int randI = 1;
 
             for (int i = 1; i < 10; i++)
             {
+
+                randP = this.GetRandPate();
                 Pizza randPizza = new Pizza
                 {
                     Id = i,
                     Nom = String.Format("Pizza n°{0}", i),
-                    Pate = ListePates.FirstOrDefault(x => x.Id == this.GetRandPate())
+                    Pate = ListePates.FirstOrDefault(x => x.Id == randP)
                 };
 
                 randPizza.Ingredients = new List<Ingredient>();
                 Ingredient ingredientAdded = new Ingredient();
-                for (int j = 0; j < rand.Next(0, 10); j++)
+                int limit = rand.Next(3, 10);
+                for (int j = 0; j < limit ; j++)
                 {
-                    Ingredient ingredientRandom = ListeIngredients.FirstOrDefault(x => x.Id == this.GetRandIngredient());
+                    randI = this.GetRandIngredient();
+                    Ingredient ingredientRandom = ListeIngredients.Where(x => x.Id == randI).First();
                     if (ingredientRandom != ingredientAdded)
                     {
                         randPizza.Ingredients.Add(ingredientRandom);
@@ -84,12 +90,12 @@ namespace TP_Pizzas.Utils
 
         private int GetRandIngredient()
         {
-            return rand.Next(0, this.ListeIngredients.Count()+1);
+            return rand.Next(1, ListeIngredients.Count()-1);
         }
 
         private int GetRandPate()
         {
-            return rand.Next(0, this.ListePates.Count()+1);
+            return rand.Next(1, ListePates.Count()-1);
         }
     }
 
