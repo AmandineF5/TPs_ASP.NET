@@ -128,6 +128,8 @@
     <Compile Include="Models\PizzaVM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\PizzaFakeDB.cs" />
+    <Compile Include="Validation\ValidationIngredients.cs" />
+    <Compile Include="Validation\ValidationNom.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />

@@ -42,20 +42,32 @@ namespace TP_Pizzas.Controllers
             try
             {
                 vm.Pizza.Pate = PizzaFakeDB.Instance.ListePates.FirstOrDefault(x => x.Id == vm.pateId);
-               
-                vm.Pizza.Ingredients = PizzaFakeDB.Instance.ListeIngredients.Where(x => vm.IngredientsIds.Contains(x.Id)).ToList();
+
+                List<Ingredient> pizzaSelect = vm.Pizza.Ingredients;
+                pizzaSelect = PizzaFakeDB.Instance.ListeIngredients.Where(x => vm.IngredientsIds.Contains(x.Id)).ToList();
                 
-                if (PizzaFakeDB.Instance.ListePizzas.Count == 0)
+                if (ModelState.IsValid)
                 {
-                    vm.Pizza.Id = 1;
+                    if (PizzaFakeDB.Instance.ListePizzas.Count == 0)
+                    {
+                        vm.Pizza.Id = 1;
+                    }
+                    else
+                    {
+                        vm.Pizza.Id = PizzaFakeDB.Instance.ListePizzas.Max(x => x.Id) + 1;
+                    }
+                   
+                    PizzaFakeDB.Instance.ListePizzas.Add(vm.Pizza);
+                    return RedirectToAction("Index");
                 } else
                 {
-                    vm.Pizza.Id = PizzaFakeDB.Instance.ListePizzas.Max(x => x.Id) + 1;
+                    vm.Ingredients = PizzaFakeDB.Instance.ListeIngredients;
+                    vm.Pates = PizzaFakeDB.Instance.ListePates;
+                    return View(vm);
                 }
                 
-                PizzaFakeDB.Instance.ListePizzas.Add(vm.Pizza);
 
-                return RedirectToAction("Index");
+                
             }
             catch
             {
