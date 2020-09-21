@@ -21,6 +21,8 @@ namespace TP_Pizzas.Validation
             {
                 if (ingredientsId.Count() == pizza.Ingredients.Count())
                 {
+                    //TODO: exclure la pizza en mode édition (override ValidationResult isValid, y appeler
+                    //la vm par var vm = validationContext.ObjectInstance as PizzaVM) ==> voir correction AC dans la classe ValidationNotSame
                     foreach (var ingredientPizza in pizza.Ingredients)
                     {
                         foreach (var selectedIngredientId in ingredientsId)
