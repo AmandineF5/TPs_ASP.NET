@@ -17,10 +17,10 @@ namespace TP_Pizzas.Models
         public List<Ingredient> Ingredients { get; set; }
         public List<Pate> Pates { get; set; }
         [ValidationIngredients(2, 5)]
+        [ValidationComposition]
         public List<int> IngredientsIds { get; set; }
 
-        
-        public int? IdPate { get; set; }
-        public int pateId { get; set; }
+        [Required]
+        public int? pateId { get; set; }
     }
 }

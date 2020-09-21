@@ -15,7 +15,7 @@ namespace BO.Validation
 
         private List<int> ingredientsId = null;
 
-        public ValidationIngredients (int min, int max)
+        public ValidationIngredients(int min, int max)
         {
             this._min = min;
             this._max = max;
@@ -26,7 +26,7 @@ namespace BO.Validation
             this.ingredientsId = value as List<int>;
             int nbIngredients = ingredientsId.Count();
 
-            if (nbIngredients > this._min && nbIngredients < this._max)
+            if (nbIngredients >= this._min && nbIngredients <= this._max)
             {
                 isOk = true;
             }

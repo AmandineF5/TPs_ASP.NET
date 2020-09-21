@@ -17,21 +17,30 @@ namespace TP_Pizzas.Validation
             this.ingredientsId = value as List<int>;
             List<Pizza> listePizzas = PizzaFakeDB.Instance.ListePizzas;
 
-            foreach (var item in listePizzas)
+            foreach (var pizza in listePizzas)
             {
-                if (ingredientsId.Count() == item.Ingredients.Count())
+                if (ingredientsId.Count() == pizza.Ingredients.Count())
                 {
-                    foreach (var ingredient in item.Ingredients)
+                    foreach (var ingredientPizza in pizza.Ingredients)
                     {
-                        foreach (var igredientP in item)
+                        foreach (var selectedIngredientId in ingredientsId)
                         {
-
+                            if (selectedIngredientId == ingredientPizza.Id)
+                            {
+                                isOk = false;
+                            } else
+                            {
+                                isOk = true;
+                                return isOk;
+                            }
                         }
                     }
                 }
+                else
+                {
+                    isOk = true;
+                }
             }
-         
-
             return isOk;
         }
 
