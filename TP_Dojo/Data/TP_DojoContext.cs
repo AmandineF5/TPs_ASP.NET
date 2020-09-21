@@ -20,5 +20,7 @@ namespace TP_Dojo.Data
         }
 
         public System.Data.Entity.DbSet<BO_Dojo.Samourai> Samourais { get; set; }
+
+        public System.Data.Entity.DbSet<BO_Dojo.Arme> Armes { get; set; }
     }
 }
