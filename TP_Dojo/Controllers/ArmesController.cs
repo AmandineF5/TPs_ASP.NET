@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using BO_Dojo;
 using TP_Dojo.Data;
+using TP_Dojo.Models;
 
 namespace TP_Dojo.Controllers
 {
@@ -97,12 +98,16 @@ namespace TP_Dojo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            SamouraiVM sVM = new SamouraiVM();
             Arme arme = db.Armes.Find(id);
+            sVM.Arme = arme;
+            sVM.ArmeId = arme.Id;
+            sVM.ListeSamourais = db.Samourais.Where(x => x.Arme.Id == arme.Id).ToList();
             if (arme == null)
             {
                 return HttpNotFound();
             }
-            return View(arme);
+            return View(sVM);
         }
 
         // POST: Armes/Delete/5
@@ -111,6 +116,12 @@ namespace TP_Dojo.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Arme arme = db.Armes.Find(id);
+            List<Samourai> SamouraisAvecArme = new List<Samourai>();
+            SamouraisAvecArme = db.Samourais.Where(x => x.Arme.Id == arme.Id).ToList();
+            foreach (var samourai in SamouraisAvecArme)
+            {
+                samourai.Arme = null;
+            }
             db.Armes.Remove(arme);
             db.SaveChanges();
             return RedirectToAction("Index");

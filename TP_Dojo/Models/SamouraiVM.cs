@@ -13,5 +13,11 @@ namespace TP_Dojo.Models
         public List<Arme> ListeArmes { get; set; }
 
         public int? ArmeId { get; set; }
+
+        public List<Samourai> ListeSamourais { get; set; }
+
+        public int? SamouraiId { get; set; }
+
+        public Arme Arme { get; set; }
     }
 }
