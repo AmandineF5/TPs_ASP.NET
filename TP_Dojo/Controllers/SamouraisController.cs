@@ -9,6 +9,7 @@ using System.Web.Mvc;
 using BO_Dojo;
 using TP_Dojo.Data;
 using TP_Dojo.Models;
+using TP_Dojo.Utils;
 
 namespace TP_Dojo.Controllers
 {
@@ -103,8 +104,9 @@ namespace TP_Dojo.Controllers
             if (ModelState.IsValid)
             {
                 Samourai samourai = db.Samourais.Include(x => x.Arme).FirstOrDefault(x => x.Id == sVM.Samourai.Id);
-                samourai.Force = sVM.Samourai.Force;
-                samourai.Nom = sVM.Samourai.Nom;
+                //samourai.Force = sVM.Samourai.Force;
+                //samourai.Nom = sVM.Samourai.Nom;
+                samourai.SetObjectProp(sVM.Samourai);
                 if (sVM.ArmeId != null)
                 {
                     samourai.Arme = db.Armes.Find(sVM.ArmeId);

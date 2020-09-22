@@ -1,5 +1,4 @@
-﻿@model TP_Dojo.Models.SamouraiVM
-
+﻿@model BO_Dojo.Samourai
 @{
     ViewBag.Title = "Details";
 }
@@ -11,29 +10,36 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Samourai.Force)
+            @Html.DisplayNameFor(model => model.Force)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Samourai.Force)
+            @Html.DisplayFor(model => model.Force)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Samourai.Nom)
+            @Html.DisplayNameFor(model => model.Nom)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Samourai.Nom)
+            @Html.DisplayFor(model => model.Nom)
         </dd>
         <dt>
-            @Html.DisplayNameFor(model => model.Samourai.Arme)
+            @Html.DisplayNameFor(model => model.Arme)
         </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Samourai.Arme.Nom)
-        </dd>
+        @if (Model.Arme != null)
+        {
+            <dd>
+                @Html.DisplayFor(model => model.Arme.Nom)
+            </dd>
+        } else
+        {
+            <dd>Aucune arme</dd>
+        }
+
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Modifier", "Edit", new { id = Model.Samourai.Id }) |
+    @Html.ActionLink("Modifier", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Retour à la liste", "Index")
 </p>
