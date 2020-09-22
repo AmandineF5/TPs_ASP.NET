@@ -31,14 +31,11 @@ namespace TP_Dojo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Samourai samourai = db.Samourais.Find(id);
-            SamouraiVM sVM = new SamouraiVM();
-            sVM.Samourai = samourai;
-            sVM.ArmeId = (db.Armes.Find(samourai.Arme.Id)).Id;
             if (samourai == null)
             {
                 return HttpNotFound();
             }
-            return View(sVM);
+            return View(samourai);
         }
 
         // GET: Samourais/Create
@@ -64,7 +61,7 @@ namespace TP_Dojo.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            sVM.ListeArmes = db.Armes.ToList();
             return View(sVM);
         }
 
@@ -103,10 +100,9 @@ namespace TP_Dojo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(SamouraiVM sVM)
         {
-            sVM.ListeArmes = db.Armes.ToList();
             if (ModelState.IsValid)
             {
-                Samourai samourai = db.Samourais.Find(sVM.Samourai.Id);
+                Samourai samourai = db.Samourais.Include(x => x.Arme).FirstOrDefault(x => x.Id == sVM.Samourai.Id);
                 samourai.Force = sVM.Samourai.Force;
                 samourai.Nom = sVM.Samourai.Nom;
                 if (sVM.ArmeId != null)
@@ -119,6 +115,7 @@ namespace TP_Dojo.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            sVM.ListeArmes = db.Armes.ToList();
             return View(sVM);
         }
 
