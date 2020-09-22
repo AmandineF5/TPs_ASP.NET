@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BO;
+using BO_Dojo;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -22,5 +24,18 @@ namespace TP_Dojo.Data
         public System.Data.Entity.DbSet<BO_Dojo.Samourai> Samourais { get; set; }
 
         public System.Data.Entity.DbSet<BO_Dojo.Arme> Armes { get; set; }
+
+        public System.Data.Entity.DbSet<BO_Dojo.Arme> ArtMartials { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //une Arme ne peut appartenir qu’à un seul samouraï
+            modelBuilder.Entity<Samourai>().HasOptional(x => x.Arme).WithOptionalPrincipal();
+
+            //Un samouraï possède désormais une liste d’arts martiaux
+            //Un art martial peut être associé à zéro ou plusieurs samouraïs
+            modelBuilder.Entity<Samourai>().HasMany(x => x.ArtMartials).WithMany();
+
+        }
     }
 }
