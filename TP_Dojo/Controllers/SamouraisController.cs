@@ -55,8 +55,9 @@ namespace TP_Dojo.Controllers
         {
             if (ModelState.IsValid)
             {
-                sVM.Samourai.Arme = db.Armes.Find(sVM.ArmeId);
-                db.Samourais.Add(sVM.Samourai);
+                Samourai samourai = sVM.Samourai;
+                samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                db.Samourais.Add(samourai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -99,11 +100,19 @@ namespace TP_Dojo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(SamouraiVM sVM)
         {
+            sVM.ListeArmes = db.Armes.ToList();
             if (ModelState.IsValid)
             {
-                sVM.Samourai.Arme = db.Armes.Find(sVM.ArmeId);
-                Samourai samourai = sVM.Samourai;
-                db.Entry(samourai).State = EntityState.Modified;
+                Samourai samourai = db.Samourais.Find(sVM.Samourai.Id);
+                samourai.Force = sVM.Samourai.Force;
+                samourai.Nom = sVM.Samourai.Nom;
+                if (sVM.ArmeId != null)
+                {
+                    samourai.Arme = db.Armes.FirstOrDefault(x => x.Id == sVM.ArmeId.Value);
+                } else
+                {
+                    samourai.Arme = null;
+                }
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
