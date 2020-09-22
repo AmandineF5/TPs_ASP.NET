@@ -111,7 +111,7 @@ namespace TP_Dojo.Controllers
                 samourai.Nom = sVM.Samourai.Nom;
                 if (sVM.ArmeId != null)
                 {
-                    samourai.Arme = db.Armes.FirstOrDefault(x => x.Id == sVM.ArmeId.Value);
+                    samourai.Arme = db.Armes.Find(sVM.ArmeId);
                 } else
                 {
                     samourai.Arme = null;
@@ -130,12 +130,24 @@ namespace TP_Dojo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            SamouraiVM sVM = new SamouraiVM();
             Samourai samourai = db.Samourais.Find(id);
+
             if (samourai == null)
             {
                 return HttpNotFound();
             }
-            return View(samourai);
+            else
+            {
+                sVM.Samourai = samourai;
+
+                if (samourai.Arme != null)
+                {
+                    sVM.ArmeId = samourai.Arme.Id;
+                }
+
+                return View(sVM);
+            }
         }
 
         // POST: Samourais/Delete/5
