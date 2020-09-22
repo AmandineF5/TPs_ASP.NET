@@ -31,11 +31,14 @@ namespace TP_Dojo.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Samourai samourai = db.Samourais.Find(id);
+            SamouraiVM sVM = new SamouraiVM();
+            sVM.Samourai = samourai;
+            sVM.ArmeId = (db.Armes.Find(samourai.Arme.Id)).Id;
             if (samourai == null)
             {
                 return HttpNotFound();
             }
-            return View(samourai);
+            return View(sVM);
         }
 
         // GET: Samourais/Create
@@ -126,6 +129,7 @@ namespace TP_Dojo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             Samourai samourai = db.Samourais.Find(id);
             if (samourai == null)
             {
