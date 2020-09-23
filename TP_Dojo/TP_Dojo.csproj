@@ -127,19 +127,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArmesController.cs" />
+    <Compile Include="Controllers\ArtMartialsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\SamouraisController.cs" />
     <Compile Include="Data\TP_DojoContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202009211445545_InitialCreate.cs" />
-    <Compile Include="Migrations\202009211445545_InitialCreate.Designer.cs">
-      <DependentUpon>202009211445545_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202009211451000_migrationTruc.cs" />
-    <Compile Include="Migrations\202009211451000_migrationTruc.Designer.cs">
-      <DependentUpon>202009211451000_migrationTruc.cs</DependentUpon>
+    <Compile Include="Migrations\202009230738594_migInit.cs" />
+    <Compile Include="Migrations\202009230738594_migInit.Designer.cs">
+      <DependentUpon>202009230738594_migInit.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\SamouraiVM.cs" />
@@ -192,6 +189,11 @@
     <Content Include="Views\Armes\Details.cshtml" />
     <Content Include="Views\Armes\Edit.cshtml" />
     <Content Include="Views\Armes\Index.cshtml" />
+    <Content Include="Views\ArtMartials\Create.cshtml" />
+    <Content Include="Views\ArtMartials\Delete.cshtml" />
+    <Content Include="Views\ArtMartials\Details.cshtml" />
+    <Content Include="Views\ArtMartials\Edit.cshtml" />
+    <Content Include="Views\ArtMartials\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -216,11 +218,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202009211445545_InitialCreate.resx">
-      <DependentUpon>202009211445545_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202009211451000_migrationTruc.resx">
-      <DependentUpon>202009211451000_migrationTruc.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202009230738594_migInit.resx">
+      <DependentUpon>202009230738594_migInit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

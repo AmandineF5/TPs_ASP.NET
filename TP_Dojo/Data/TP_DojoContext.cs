@@ -1,4 +1,4 @@
-﻿using BO;
+﻿
 using BO_Dojo;
 using System;
 using System.Collections.Generic;
@@ -25,7 +25,7 @@ namespace TP_Dojo.Data
 
         public System.Data.Entity.DbSet<BO_Dojo.Arme> Armes { get; set; }
 
-        public System.Data.Entity.DbSet<BO_Dojo.Arme> ArtMartials { get; set; }
+        public System.Data.Entity.DbSet<BO_Dojo.ArtMartial> ArtMartials { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -37,5 +37,7 @@ namespace TP_Dojo.Data
             modelBuilder.Entity<Samourai>().HasMany(x => x.ArtMartials).WithMany();
 
         }
+
+        
     }
 }
