@@ -44,6 +44,7 @@ namespace TP_Dojo.Controllers
         {
             SamouraiVM sVM = new SamouraiVM();
             sVM.ListeArmes = db.Armes.ToList();
+            sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
 
@@ -58,11 +59,13 @@ namespace TP_Dojo.Controllers
             {
                 Samourai samourai = sVM.Samourai;
                 samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                samourai.ArtMartials = db.ArtMartials.Where(x => sVM.ListeArtMartialsId.Contains(x.Id)).ToList();
                 db.Samourais.Add(samourai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
             sVM.ListeArmes = db.Armes.ToList();
+            sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
 
@@ -82,13 +85,18 @@ namespace TP_Dojo.Controllers
             } else
             {
                 sVM.ListeArmes = db.Armes.ToList();
+                sVM.ListeArtMartials = db.ArtMartials.ToList();
                 sVM.Samourai = samourai;
 
                 if (samourai.Arme != null)
                 {
                     sVM.ArmeId = samourai.Arme.Id;
                 }
-                
+                if (samourai.ArtMartials.Any())
+                {
+                    sVM.ListeArtMartialsId = samourai.ArtMartials.Select(x => x.Id).ToList();
+                }
+
                 return View(sVM);
             }
            
@@ -103,7 +111,7 @@ namespace TP_Dojo.Controllers
         {
             if (ModelState.IsValid)
             {
-                Samourai samourai = db.Samourais.Include(x => x.Arme).FirstOrDefault(x => x.Id == sVM.Samourai.Id);
+                Samourai samourai = db.Samourais.Include(x => x.Arme).Include(x => x.ArtMartials).FirstOrDefault(x => x.Id == sVM.Samourai.Id);
                 //samourai.Force = sVM.Samourai.Force;
                 //samourai.Nom = sVM.Samourai.Nom;
                 samourai.SetObjectProp(sVM.Samourai);
@@ -114,6 +122,11 @@ namespace TP_Dojo.Controllers
                 {
                     samourai.Arme = null;
                 }
+                if (sVM.ListeArtMartialsId.Any())
+                {
+                    samourai.ArtMartials = db.ArtMartials.Where(x => sVM.ListeArtMartialsId.Contains(x.Id)).ToList();
+                }
+
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
