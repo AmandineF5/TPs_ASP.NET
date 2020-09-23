@@ -118,13 +118,24 @@ namespace TP_Dojo.Controllers
             Arme arme = db.Armes.Find(id);
             List<Samourai> SamouraisAvecArme = new List<Samourai>();
             SamouraisAvecArme = db.Samourais.Where(x => x.Arme.Id == arme.Id).ToList();
-            foreach (var samourai in SamouraisAvecArme)
+
+            if (SamouraisAvecArme.Count() == 0)
             {
-                samourai.Arme = null;
+                db.Armes.Remove(arme);
+                db.SaveChanges();
+                return RedirectToAction("Index");
             }
-            db.Armes.Remove(arme);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            else
+            {
+                ModelState.AddModelError("Arme.Nom", 
+                    String.Format("Cette arme ne peut pas être supprimée car elle appartient au samouraï {0}", 
+                    SamouraisAvecArme.FirstOrDefault().Nom));
+                SamouraiVM sVM = new SamouraiVM();
+                sVM.Arme = arme;
+                sVM.ListeSamourais = SamouraisAvecArme;
+                return View(sVM);
+            }
+            
         }
 
         protected override void Dispose(bool disposing)

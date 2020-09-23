@@ -8,6 +8,8 @@
 
 <h3>Etes-vous sûr de vouloir supprimer cette arme?</h3>
 <div>
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    
     <h4>@Html.DisplayFor(model => model.Arme.Nom)</h4>
     <hr />
     <dl class="dl-horizontal">
@@ -29,18 +31,23 @@
         <dt>
             Samouraïs possédant l'arme
         </dt>
-        @foreach (var item in Model.ListeSamourais)
+        @if (Model.ListeSamourais.Count() != 0)
         {
-            <dd>
-                @Html.DisplayFor(modelitem => item.Nom)
-            </dd>
+            foreach (var item in Model.ListeSamourais)
+            {
+                <dd>
+                    @Html.DisplayFor(modelitem => item.Nom)
+                </dd>
+            }
         }
+
 
 
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">

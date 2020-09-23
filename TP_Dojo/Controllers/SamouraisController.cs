@@ -58,7 +58,18 @@ namespace TP_Dojo.Controllers
             if (ModelState.IsValid)
             {
                 Samourai samourai = sVM.Samourai;
-                samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                Samourai SamouraiAvecArme = db.Samourais.Where(x => x.Arme.Id == sVM.ArmeId).FirstOrDefault();
+                if (SamouraiAvecArme == null)
+                {
+                    samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                } else
+                {
+                    ModelState.AddModelError("Arme.Nom",
+                   String.Format("Cette arme appartient déjà au samouraï {0}", SamouraiAvecArme.Nom));
+                    sVM.ListeArmes = db.Armes.ToList();
+                    sVM.ListeArtMartials = db.ArtMartials.ToList();
+                    return View(sVM);
+                }
                 samourai.ArtMartials = db.ArtMartials.Where(x => sVM.ListeArtMartialsId.Contains(x.Id)).ToList();
                 db.Samourais.Add(samourai);
                 db.SaveChanges();
@@ -115,9 +126,21 @@ namespace TP_Dojo.Controllers
                 //samourai.Force = sVM.Samourai.Force;
                 //samourai.Nom = sVM.Samourai.Nom;
                 samourai.SetObjectProp(sVM.Samourai);
+                Samourai SamouraiAvecArme = db.Samourais.Where(x => x.Arme.Id == sVM.ArmeId).FirstOrDefault();
                 if (sVM.ArmeId != null)
                 {
-                    samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                    if (SamouraiAvecArme == null)
+                    {
+                        samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                    } else
+                    {
+                        ModelState.AddModelError("Arme.Nom",
+                   String.Format("Cette arme appartient déjà au samouraï {0}", SamouraiAvecArme.Nom));
+                        sVM.ListeArmes = db.Armes.ToList();
+                        sVM.ListeArtMartials = db.ArtMartials.ToList();
+                        return View(sVM);
+                    }
+                   
                 } else
                 {
                     samourai.Arme = null;
@@ -131,6 +154,7 @@ namespace TP_Dojo.Controllers
                 return RedirectToAction("Index");
             }
             sVM.ListeArmes = db.Armes.ToList();
+            sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
 
@@ -168,6 +192,11 @@ namespace TP_Dojo.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Samourai samourai = db.Samourais.Find(id);
+            if (samourai.Arme != null)
+            {
+                samourai.Arme = null;
+            }
+            
             db.Samourais.Remove(samourai);
             db.SaveChanges();
             return RedirectToAction("Index");

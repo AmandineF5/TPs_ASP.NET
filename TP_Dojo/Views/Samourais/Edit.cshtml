@@ -1,10 +1,10 @@
 ﻿@model TP_Dojo.Models.SamouraiVM
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Modification";
 }
 
-<h2>Edit</h2>
+<h2>Modification</h2>
 
 
 @using (Html.BeginForm())
@@ -12,9 +12,9 @@
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Samourai</h4>
+    <h4>@Html.DisplayFor(model  => model.Samourai.Nom)</h4>
     <hr />
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Samourai.Id)
 
     <div class="form-group">
