@@ -36,6 +36,7 @@ namespace TP_Dojo.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.Message = this.dataPotentiel(samourai);
             return View(samourai);
         }
 
@@ -44,7 +45,7 @@ namespace TP_Dojo.Controllers
         {
             SamouraiVM sVM = new SamouraiVM();
             this.getListeArmesDisposDb(sVM);
-           
+
             sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
@@ -79,11 +80,12 @@ namespace TP_Dojo.Controllers
             }
             SamouraiVM sVM = new SamouraiVM();
             Samourai samourai = db.Samourais.Find(id);
-            
+
             if (samourai == null)
             {
                 return HttpNotFound();
-            } else
+            }
+            else
             {
                 this.getListeArmesDisposDb(sVM);
                 sVM.ListeArtMartials = db.ArtMartials.ToList();
@@ -97,10 +99,10 @@ namespace TP_Dojo.Controllers
                 {
                     sVM.ListeArtMartialsId = samourai.ArtMartials.Select(x => x.Id).ToList();
                 }
-
+                
                 return View(sVM);
             }
-           
+
         }
 
         // POST: Samourais/Edit/5
@@ -161,7 +163,11 @@ namespace TP_Dojo.Controllers
                 {
                     sVM.ArmeId = samourai.Arme.Id;
                 }
-
+                 if (samourai.ArtMartials.Any())
+                {
+                    sVM.ListeArtMartials = samourai.ArtMartials.ToList();
+                }
+                ViewBag.Message = this.dataPotentiel(sVM.Samourai);
                 return View(sVM);
             }
         }
@@ -176,7 +182,7 @@ namespace TP_Dojo.Controllers
             {
                 samourai.Arme = null;
             }
-            
+
             db.Samourais.Remove(samourai);
             db.SaveChanges();
             return RedirectToAction("Index");
@@ -202,6 +208,22 @@ namespace TP_Dojo.Controllers
                 }
             }
             return sVM.ListeArmes;
+        }
+
+        private string dataPotentiel(Samourai samourai)
+        {
+            int potentiel = 0;
+            if (samourai.Arme == null)
+            {
+                potentiel = (samourai.Force) * (samourai.ArtMartials.Count() + 1);
+            }
+            else
+            {
+                potentiel = (samourai.Force + samourai.Arme.Degats) * (samourai.ArtMartials.Count() + 1);
+            }
+            
+            return potentiel.ToString();
+
         }
     }
 }

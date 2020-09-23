@@ -32,10 +32,38 @@
             <dd>
                 @Html.DisplayFor(model => model.Arme.Nom)
             </dd>
-        } else
+        }
+        else
         {
             <dd>Aucune arme</dd>
         }
+
+        <dt>
+            Arts Martiaux
+        </dt>
+        <dd>
+            @if (Model.ArtMartials != null)
+            {
+                foreach (var item in Model.ArtMartials)
+                {
+                    <p>
+                        @Html.DisplayFor(modelitem => item.Nom)
+                    </p>
+                }
+            } else
+            {
+                <p>Aucun</p>
+            }
+        </dd>
+        <dt>
+            Potentiel
+        </dt>
+
+        <dd>
+            @{ var potentiel = ViewBag.Message;}
+            @potentiel
+        </dd>
+        
 
     </dl>
 </div>
