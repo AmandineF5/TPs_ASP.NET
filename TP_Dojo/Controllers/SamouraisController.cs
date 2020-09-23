@@ -94,6 +94,7 @@ namespace TP_Dojo.Controllers
                 if (samourai.Arme != null)
                 {
                     sVM.ArmeId = samourai.Arme.Id;
+                    sVM.ListeArmes.Add(db.Armes.Where(x => x.Id == sVM.ArmeId).FirstOrDefault());
                 }
                 if (samourai.ArtMartials.Any())
                 {

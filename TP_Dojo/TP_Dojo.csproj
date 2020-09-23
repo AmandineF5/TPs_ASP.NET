@@ -194,6 +194,9 @@
     <Content Include="Views\ArtMartials\Details.cshtml" />
     <Content Include="Views\ArtMartials\Edit.cshtml" />
     <Content Include="Views\ArtMartials\Index.cshtml" />
+    <Content Include="Views\Shared\EditCreateSamouraï.cshtml" />
+    <Content Include="Views\Shared\EditCreateArtMartial.cshtml" />
+    <Content Include="Views\Shared\EditCreateArme.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
