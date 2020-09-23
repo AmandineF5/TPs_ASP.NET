@@ -43,7 +43,8 @@ namespace TP_Dojo.Controllers
         public ActionResult Create()
         {
             SamouraiVM sVM = new SamouraiVM();
-            sVM.ListeArmes = db.Armes.ToList();
+            this.getListeArmesDisposDb(sVM);
+           
             sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
@@ -58,24 +59,13 @@ namespace TP_Dojo.Controllers
             if (ModelState.IsValid)
             {
                 Samourai samourai = sVM.Samourai;
-                Samourai SamouraiAvecArme = db.Samourais.Where(x => x.Arme.Id == sVM.ArmeId).FirstOrDefault();
-                if (SamouraiAvecArme == null)
-                {
-                    samourai.Arme = db.Armes.Find(sVM.ArmeId);
-                } else
-                {
-                    ModelState.AddModelError("Arme.Nom",
-                   String.Format("Cette arme appartient déjà au samouraï {0}", SamouraiAvecArme.Nom));
-                    sVM.ListeArmes = db.Armes.ToList();
-                    sVM.ListeArtMartials = db.ArtMartials.ToList();
-                    return View(sVM);
-                }
+                samourai.Arme = db.Armes.Find(sVM.ArmeId);
                 samourai.ArtMartials = db.ArtMartials.Where(x => sVM.ListeArtMartialsId.Contains(x.Id)).ToList();
                 db.Samourais.Add(samourai);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            sVM.ListeArmes = db.Armes.ToList();
+            this.getListeArmesDisposDb(sVM);
             sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
@@ -95,7 +85,7 @@ namespace TP_Dojo.Controllers
                 return HttpNotFound();
             } else
             {
-                sVM.ListeArmes = db.Armes.ToList();
+                this.getListeArmesDisposDb(sVM);
                 sVM.ListeArtMartials = db.ArtMartials.ToList();
                 sVM.Samourai = samourai;
 
@@ -129,19 +119,9 @@ namespace TP_Dojo.Controllers
                 Samourai SamouraiAvecArme = db.Samourais.Where(x => x.Arme.Id == sVM.ArmeId).FirstOrDefault();
                 if (sVM.ArmeId != null)
                 {
-                    if (SamouraiAvecArme == null)
-                    {
-                        samourai.Arme = db.Armes.Find(sVM.ArmeId);
-                    } else
-                    {
-                        ModelState.AddModelError("Arme.Nom",
-                   String.Format("Cette arme appartient déjà au samouraï {0}", SamouraiAvecArme.Nom));
-                        sVM.ListeArmes = db.Armes.ToList();
-                        sVM.ListeArtMartials = db.ArtMartials.ToList();
-                        return View(sVM);
-                    }
-                   
-                } else
+                    samourai.Arme = db.Armes.Find(sVM.ArmeId);
+                }
+                else
                 {
                     samourai.Arme = null;
                 }
@@ -153,7 +133,7 @@ namespace TP_Dojo.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            sVM.ListeArmes = db.Armes.ToList();
+            this.getListeArmesDisposDb(sVM);
             sVM.ListeArtMartials = db.ArtMartials.ToList();
             return View(sVM);
         }
@@ -209,6 +189,19 @@ namespace TP_Dojo.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        private List<Arme> getListeArmesDisposDb(SamouraiVM sVM)
+        {
+            sVM.ListeArmes = new List<Arme>();
+            foreach (var arme in db.Armes.ToList())
+            {
+                if (db.Samourais.Where(x => x.Arme.Id == arme.Id).ToList().Count() == 0)
+                {
+                    sVM.ListeArmes.Add(arme);
+                }
+            }
+            return sVM.ListeArmes;
         }
     }
 }
