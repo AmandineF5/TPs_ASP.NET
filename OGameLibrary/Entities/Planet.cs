@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OGameLibrary.Validation;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
@@ -24,6 +25,7 @@ namespace OGameLibrary.Entities
             set { name = value; }
         }
 
+        [IntValidation]
         public int? CaseNb
         {
             get { return caseNb; }

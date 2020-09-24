@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OGameLibrary.Validation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,6 +22,7 @@ namespace OGameLibrary.Entities
             set { name = value; }
         }
 
+        [IntValidation]
         public int? LastQuantity
         {
             get { return lastQuantity; }

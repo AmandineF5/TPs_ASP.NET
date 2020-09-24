@@ -1,5 +1,7 @@
-﻿using System;
+﻿using OGameLibrary.Validation;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -22,12 +24,14 @@ namespace OGameLibrary.Entities
             set { name = value; }
         }
 
+        [IntValidation]
         public virtual int? Level
         {
             get { return level; }
             set { level = value; }
         }
 
+        [IntValidation]
         [NotMapped]
         public virtual int? CellNb
         {
