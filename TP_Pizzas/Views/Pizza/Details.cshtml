@@ -9,8 +9,8 @@
 <div>
     <h4>Pizza</h4>
     <hr />
-
-    @Html.Partial("PizzaInfos", Model)
+    @Html.HiddenFor(model => model.Pizza.Id)
+    @Html.Partial("PizzaPropDisplay", Model)
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Pizza.Id }) |

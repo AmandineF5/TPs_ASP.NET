@@ -1,8 +1,10 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using TP_Pizzas.Models;
 using TP_Pizzas.Utils;
 
 namespace TP_Pizzas.Validation
@@ -11,39 +13,41 @@ namespace TP_Pizzas.Validation
     public class ValidationComposition : System.ComponentModel.DataAnnotations.ValidationAttribute
     {
         private List<int> ingredientsId = null;
-        public override bool IsValid(object value)
-        {
-            bool isOk = false;
-            this.ingredientsId = value as List<int>;
-            List<Pizza> listePizzas = PizzaFakeDB.Instance.ListePizzas;
+        List<Pizza> listePizzas = PizzaFakeDB.Instance.ListePizzas;
+  
 
-            foreach (var pizza in listePizzas)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            bool isOk = true;
+
+            if (value is List<int>)
             {
-                if (ingredientsId.Count() == pizza.Ingredients.Count())
+                this.ingredientsId = value as List<int>;
+                var vm = validationContext.ObjectInstance as PizzaVM;
+                if (vm.Pizza != null && vm.Pizza.Id != 0)
                 {
-                    //TODO: exclure la pizza en mode édition (override ValidationResult isValid, y appeler
-                    //la vm par var vm = validationContext.ObjectInstance as PizzaVM) ==> voir correction AC dans la classe ValidationNotSame
-                    foreach (var ingredientPizza in pizza.Ingredients)
+                    if (this.listePizzas.Where(x => x.Id != vm.Pizza.Id).Any(x => x.Ingredients.Select(y => y.Id).OrderBy(z => z).SequenceEqual(this.ingredientsId.OrderBy(z => z))))
                     {
-                        foreach (var selectedIngredientId in ingredientsId)
-                        {
-                            if (selectedIngredientId == ingredientPizza.Id)
-                            {
-                                isOk = false;
-                            } else
-                            {
-                                isOk = true;
-                                return isOk;
-                            }
-                        }
+                        isOk = false;
                     }
                 }
                 else
                 {
-                    isOk = true;
+                    if (this.listePizzas.Any(x => x.Ingredients.Select(y => y.Id).OrderBy(z => z).SequenceEqual(this.ingredientsId.OrderBy(z => z))))
+                    {
+                        isOk = false;
+                    }
                 }
             }
-            return isOk;
+
+            if (isOk == false)
+            {
+                return new ValidationResult("Cette composition existe déjà. Veuillez modifier les ingrédients");
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public override string FormatErrorMessage(string name)

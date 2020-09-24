@@ -1,8 +1,10 @@
 ﻿using BO;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using TP_Pizzas.Models;
 using TP_Pizzas.Utils;
 
 namespace TP_Pizzas.Validation
@@ -11,25 +13,39 @@ namespace TP_Pizzas.Validation
     public class ValidationNom : System.ComponentModel.DataAnnotations.ValidationAttribute
     {
         private Pizza pizza = new Pizza();
-        public override bool IsValid(object value)
-        {
-            bool isOk = false;
-            this.pizza = value as Pizza;
-            List<Pizza> listePizzas = PizzaFakeDB.Instance.ListePizzas;
+      
 
-            foreach (var item in listePizzas)
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            bool isOk = true;
+            if (value is Pizza)
             {
-                if (pizza.Nom == item.Nom)
+                this.pizza = value as Pizza;
+                List<Pizza> listePizzas = PizzaFakeDB.Instance.ListePizzas;
+                var vm = validationContext.ObjectInstance as PizzaVM;
+
+                if (vm.Pizza != null && vm.Pizza.Id != 0)
                 {
-                    isOk = false;
-                    return isOk;
+                    if(listePizzas.Where(x => x.Id != vm.Pizza.Id).Any(x => x.Nom.Equals(pizza.Nom)))
+                    {
+                        isOk = false;
+                    }
                 } else
                 {
-                    isOk = true;
+                    if (listePizzas.Any(x => x.Nom.Equals(pizza.Nom)))
+                    {
+                        isOk = false;
+                    }
                 }
             }
-
-            return isOk;
+            if (isOk == false)
+            {
+                return new ValidationResult("Ce nom est déjà pris");
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public override string FormatErrorMessage(string name)

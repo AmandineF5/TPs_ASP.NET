@@ -101,18 +101,24 @@ namespace TP_Pizzas.Controllers
         [HttpPost]
         public ActionResult Edit(PizzaVM vm)
         {
-            try
+            if (ModelState.IsValid)
             {
-                Pizza pizzaToEdit = PizzaFakeDB.Instance.ListePizzas.FirstOrDefault(x => x.Id == vm.Pizza.Id);
+                Pizza pizzaToEdit = PizzaFakeDB.Instance.ListePizzas.FirstOrDefault(x => x.Id == vm.Pizza.Id) ;
+                pizzaToEdit.Pate = PizzaFakeDB.Instance.ListePates.FirstOrDefault(pate => pate.Id == vm.pateId);
                 pizzaToEdit.Nom = vm.Pizza.Nom;
-                pizzaToEdit.Ingredients = PizzaFakeDB.Instance.ListeIngredients.Where(x => vm.IngredientsIds.Contains(x.Id)).ToList();
-                pizzaToEdit.Pate = PizzaFakeDB.Instance.ListePates.Where(x => x.Id == vm.pateId).FirstOrDefault();
+                pizzaToEdit.Ingredients.Clear();
+                foreach (var idIngredient in vm.IngredientsIds)
+                {
+                    pizzaToEdit.Ingredients.Add(PizzaFakeDB.Instance.ListeIngredients.FirstOrDefault(x => x.Id == idIngredient));
+                }
 
                 return RedirectToAction("Index");
             }
-            catch
+            else
             {
-                return View();
+                vm.Ingredients = PizzaFakeDB.Instance.ListeIngredients;
+                vm.Pates = PizzaFakeDB.Instance.ListePates;
+                return View(vm);
             }
         }
 

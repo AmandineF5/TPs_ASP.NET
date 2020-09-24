@@ -26,6 +26,7 @@ namespace TP_Pizzas.Utils
         public List<Pizza> ListePizzas { get; private set; }
         public List<Pate> ListePates { get; private set; }
         public List<Ingredient> ListeIngredients { get; private set; }
+        public IEnumerable<object> Pizzas { get; internal set; }
 
         private List<Pizza> GetPizzas()
         {
