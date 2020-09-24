@@ -23,6 +23,9 @@
         <th>
             @Html.DisplayNameFor(model => model.ArtMartials)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Potentiel)
+        </th>
     </tr>
 
 @foreach (var item in Model) {
@@ -44,7 +47,11 @@
             </p>
         }
     </td>
-    
+
+    <td>
+        @Html.DisplayFor(modelItem => item.Potentiel)
+    </td>
+
     <td>
         @Html.ActionLink("Modifier", "Edit", new { id = item.Id }) |
         @Html.ActionLink("Détails", "Details", new { id = item.Id }) |

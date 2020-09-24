@@ -36,7 +36,7 @@ namespace TP_Dojo.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.Message = this.dataPotentiel(samourai);
+            
             return View(samourai);
         }
 
@@ -168,7 +168,7 @@ namespace TP_Dojo.Controllers
                 {
                     sVM.ListeArtMartials = samourai.ArtMartials.ToList();
                 }
-                ViewBag.Message = this.dataPotentiel(sVM.Samourai);
+               
                 return View(sVM);
             }
         }
@@ -211,20 +211,6 @@ namespace TP_Dojo.Controllers
             return sVM.ListeArmes;
         }
 
-        private string dataPotentiel(Samourai samourai)
-        {
-            int potentiel = 0;
-            if (samourai.Arme == null)
-            {
-                potentiel = (samourai.Force) * (samourai.ArtMartials.Count() + 1);
-            }
-            else
-            {
-                potentiel = (samourai.Force + samourai.Arme.Degats) * (samourai.ArtMartials.Count() + 1);
-            }
-            
-            return potentiel.ToString();
-
-        }
+       
     }
 }
