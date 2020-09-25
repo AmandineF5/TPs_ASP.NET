@@ -32,6 +32,7 @@ namespace OGameLibrary.Entities
             set { caseNb = value; }
         }
 
+        [ResourceValidation]
         public virtual List<Resource> Resources
         {
             get { return resources; }
